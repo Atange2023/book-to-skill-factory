@@ -1,65 +1,68 @@
-# book-to-skill-factory — 拆书 → 成课 → 成 Skill 生产链（方法论）
+# book-to-skill-factory v1.2
 
-> 把一本书系统化加工为**三态资产**：学习档案（人读）→ 企业课程（人用）→ 可执行 Skill（Agent 用）。
-> 本工作流来自 Question-to-Book OS 实战萃取（《销售就是会提问》全流程），整合开源最佳实践。
+把一本书或长篇 PDF 转化为四类可复用资产：学习档案、金句/案例/版本素材库、课程与可执行 Skill，以及面向书籍目标读者的响应式“拆书精要”网页。
 
-## 这是什么
+## v1.2 新增
 
-一份可直接安装的 **Agent Skill**（playbook），教会任何支持 Agent Skills 的智能体（Claude Code / Codex / Reasonix 等）执行完整的"拆书成课成 Skill"生产链：
+- 目标读者两步推导：先判断书籍目标读者，再结合当前分享场景收窄；
+- E 路线“读者分享版”：单文件、离线、响应式 HTML；
+- 原句、编辑改写、S1-S4 与 E1-E3 的发布边界；
+- 内容源与呈现层分离，支持结构化测试；
+- 1440px 桌面端与 390px 手机端浏览器真实渲染验收；
+- `agents/openai.yaml`，便于 Codex 等支持 Agent Skills 的工具发现与调用。
 
-```
-资料审计 → 决策卡(L0) → 知识地图(L1) → L2精读 → 学习档案落盘
-→ 成课(体验式设计) → 成Skill(编译+路由) → 成果生产(Word/PPT/图示/陪练)
-```
+## 生产链
 
-内含 **12 条实战踩坑**（PDF 中文提取 / edge-tts 声线限制 / 术语雷 / Word 表头渲染 / skill 安装限制等），避免其他智能体重复踩坑。
-
-## 安装方法（给其他智能体）
-
-**方式一：直接加载**（最简单）——将本仓库的 `SKILL.md` 放入智能体的 skills 目录：
-
-```bash
-# 例：Reasonix / Claude Code 项目级
-<workspace>/.reasonix/skills/book-to-skill-factory/SKILL.md
+```text
+来源与版本审计 → L0 决策卡 → L1 知识地图 → L2 精读
+→ 金句库 / 案例库 / 版本谱系 → 学习档案
+→ 成课 → 成 Skill → 读者分享版 → 验收
 ```
 
-**方式二：克隆仓库**：
+## 安装
+
+请安装完整目录，不要只复制 `SKILL.md`；v1.2 会按任务读取 `references/` 中的证据、金句、案例、版本和网页发布规范。
+
+```text
+book-to-skill-factory/
+├── SKILL.md
+├── agents/openai.yaml
+└── references/
+    ├── case-library-spec.md
+    ├── edition-comparison-spec.md
+    ├── evidence-and-source.md
+    ├── output-manifest.md
+    ├── quote-library-spec.md
+    └── reader-first-html-spec.md
+```
+
+将完整目录放入运行时的 skills 目录，例如：
+
+```text
+<workspace>/.reasonix/skills/book-to-skill-factory/
+~/.codex/skills/book-to-skill-factory/
+~/.agents/skills/book-to-skill-factory/
+```
+
+也可以克隆本仓库后复制完整目录：
 
 ```bash
 git clone https://github.com/Atange2023/book-to-skill-factory.git
-# 将 book-to-skill-factory/SKILL.md 复制到你的 skills 目录
 ```
 
-安装后即可通过 `/book-to-skill-factory` 或 `run_skill({name: "book-to-skill-factory"})` 调用。
+## 使用示例
 
-## 使用方法
+- “拆解这本书，先做 A 路线快速验收。”
+- “补齐金句库和案例库，并标明引用边界。”
+- “比较新版与旧版，整理有证据等级的再版亮点。”
+- “基于全部研究成果生成面向本书目标读者的响应式拆书精要网页。”
 
-向智能体提供：**书籍/资料文件 + 你的目标**（学到 L0–L5 哪一级、课程形态、Skill 用途）。
+## 相关项目
 
-触发语示例：
-- "拆这本书，做成课，再编译成 Skill"
-- "用 factory 流程处理这份 PDF"
-
-## 方法论家族（配套仓库）
-
-本仓库是整个 skill 生态的**总纲**，与以下仓库构成家族（互链）：
-
-| 仓库 | 角色 | 关系 |
-| --- | --- | --- |
-| [book-to-diagram-skill](https://github.com/Atange2023/book-to-diagram-skill) | 子能力：拆书 → 16:9 概论 SVG 图 | factory 阶段 7 引用 |
-| [sales-roleplay-solo](https://github.com/Atange2023/sales-roleplay-solo) | 成品样例：数字人语音销售陪练系统 | factory 阶段 5 引用 |
-
-## 依赖
-
-- `pypdf`（PDF 提取，`py -m pip install pypdf`）
-- `pandoc`（Word/文档转换）
-- `edge-tts`（可选，语音陪练用）
-- `python-pptx lxml`（可选，PPT 用）
+- [book-to-diagram-skill](https://github.com/Atange2023/book-to-diagram-skill)：书籍内容到可视化图示；
+- [sales-roleplay-solo](https://github.com/Atange2023/sales-roleplay-solo)：课程与数字人陪练成品样例。
 
 ## License
 
-MIT © Anson TANG (atange2023)
+MIT © Anson TANG (Atange2023)
 
-## 版权与来源
-
-方法框架源自《销售就是会提问》（青木毅，天津人民出版社 2021，引用标注页码）；本工作流为本项目原创，不包含原书正文。参考开源：anthropics/skills、agentskills、virgiliojr94/book-to-skill、apple-ouyang/book-to-skill。

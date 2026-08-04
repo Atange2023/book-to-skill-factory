@@ -1,0 +1,5 @@
+interface:
+  display_name: "拆书成课成 Skill 工厂"
+  short_description: "把书籍研究转化为学习档案、课程、Skill 与读者分享网页"
+  default_prompt: "使用 $book-to-skill-factory 审计并拆解这本书，生成可溯源的研究资产与读者分享版。"
+
